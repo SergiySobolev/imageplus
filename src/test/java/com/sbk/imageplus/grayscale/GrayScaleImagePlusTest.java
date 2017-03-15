@@ -2,14 +2,17 @@ package com.sbk.imageplus.grayscale;
 
 import com.sbk.imageplus.DefaultImagePlus;
 import com.sbk.imageplus.ImagePlus;
-import com.sbk.imageplus.grayscale.GrayScaleImagePlus;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DynamicTest;
+import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.function.Executable;
 
 import java.awt.image.Raster;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.StringJoiner;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -44,7 +47,8 @@ public class GrayScaleImagePlusTest {
                     assertEquals(pixelIntensity[1], pixelIntensity[2]);
                     assertEquals(pixelIntensity[0], pixelIntensity[2]);
                 });
-                String testName = "Check rgb intensities on pixel [ " + i + "," + j + "]";
+                String testName = new StringJoiner(",", "Check rgb intensities on pixel [", "]")
+                        .add(""+i).add(""+j).toString();
                 DynamicTest dTest = DynamicTest.dynamicTest(testName, exec);
                 dynamicTests.add(dTest);
             }
