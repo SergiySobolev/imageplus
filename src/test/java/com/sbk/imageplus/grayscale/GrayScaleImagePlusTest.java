@@ -36,9 +36,7 @@ public class GrayScaleImagePlusTest {
     @DisplayName("Grayscale image rgb components should have same intensity")
     public Collection<DynamicTest> grayScaleImagesRGBComponentsShouldHaveSameIntensity() {
         Collection<DynamicTest> dynamicTests = new ArrayList<>();
-        ImagePlus imagePlus = grayScaleImagePlus.grayScale();
-        assertNotNull(imagePlus);
-        Raster raster = imagePlus.raster();
+        Raster raster = grayScaleImagePlus.raster();
         for(int i=0; i<100; i++){
             for(int j=0; j<200; j++) {
                 int[] pixelIntensity = raster.getPixel(100,100, new int[3]);

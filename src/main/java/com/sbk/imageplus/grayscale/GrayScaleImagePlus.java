@@ -4,16 +4,30 @@ import com.sbk.imageplus.DefaultImagePlus;
 import com.sbk.imageplus.ImagePlus;
 
 import java.awt.image.Raster;
+import java.io.IOException;
 
 
-public class GrayScaleImagePlus {
-    private ImagePlus imagePlus;
-    public GrayScaleImagePlus(ImagePlus imagePlus) {
+public class GrayScaleImagePlus implements ImagePlus {
+    private final ImagePlus imagePlus;
+    private ImagePlus grayScaleImagePlus;
+    GrayScaleImagePlus(ImagePlus imagePlus) {
         this.imagePlus = imagePlus;
     }
 
-    public ImagePlus grayScale() {
-        Raster raster = imagePlus.raster();
+    @Override
+    public Raster raster() {
+        checkAndInitializeIfNullGrayScaleImage();
+        return grayScaleImagePlus.raster();
+    }
+
+    @Override
+    public void writeToFile(String filePath) throws IOException {
+        checkAndInitializeIfNullGrayScaleImage();
+        grayScaleImagePlus.writeToFile(filePath);
+    }
+
+    private ImagePlus makeGrayScale(ImagePlus img) {
+        Raster raster = img.raster();
         int width = raster.getWidth();
         int height = raster.getHeight();
         int[] matrix = new int[width * height];
@@ -27,4 +41,9 @@ public class GrayScaleImagePlus {
         return new DefaultImagePlus(matrix, width, height);
     }
 
+    private void checkAndInitializeIfNullGrayScaleImage() {
+        if(grayScaleImagePlus == null) {
+            grayScaleImagePlus = makeGrayScale(imagePlus);
+        }
+    }
 }
