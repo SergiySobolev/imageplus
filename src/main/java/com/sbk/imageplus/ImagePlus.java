@@ -1,9 +1,13 @@
 package com.sbk.imageplus;
 
-import java.awt.image.Raster;
+import com.sbk.imageplus.pixel.PixelPlus;
+
 import java.io.IOException;
 
 public interface ImagePlus {
-    Raster raster();
+    PixelPlus getPixel(int x, int y);
+    int getWidth();
+    int getHeight();
+    int type();
     void writeToFile(String filePath) throws IOException;
 }

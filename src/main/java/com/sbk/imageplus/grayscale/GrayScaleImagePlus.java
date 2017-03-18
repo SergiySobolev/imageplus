@@ -2,48 +2,54 @@ package com.sbk.imageplus.grayscale;
 
 import com.sbk.imageplus.DefaultImagePlus;
 import com.sbk.imageplus.ImagePlus;
+import com.sbk.imageplus.pixel.PixelPlus;
 
-import java.awt.image.Raster;
 import java.io.IOException;
 
 
 public class GrayScaleImagePlus implements ImagePlus {
-    private final ImagePlus imagePlus;
-    private ImagePlus grayScaleImagePlus;
+
+    private final ImagePlus grayScaleImage;
+
     GrayScaleImagePlus(ImagePlus imagePlus) {
-        this.imagePlus = imagePlus;
+        this.grayScaleImage = makeGrayScale(imagePlus);
     }
 
     @Override
-    public Raster raster() {
-        checkAndInitializeIfNullGrayScaleImage();
-        return grayScaleImagePlus.raster();
+    public PixelPlus getPixel(int x, int y) {
+        return grayScaleImage.getPixel(x,y);
+    }
+
+    @Override
+    public int getWidth() {
+        return grayScaleImage.getWidth();
+    }
+
+    @Override
+    public int getHeight() {
+        return grayScaleImage.getHeight();
+    }
+
+    @Override
+    public int type() {
+        return grayScaleImage.type();
     }
 
     @Override
     public void writeToFile(String filePath) throws IOException {
-        checkAndInitializeIfNullGrayScaleImage();
-        grayScaleImagePlus.writeToFile(filePath);
+        grayScaleImage.writeToFile(filePath);
     }
 
-    private ImagePlus makeGrayScale(ImagePlus img) {
-        Raster raster = img.raster();
-        int width = raster.getWidth();
-        int height = raster.getHeight();
+    private ImagePlus makeGrayScale(ImagePlus imagePlus) {
+        int width = imagePlus.getWidth();
+        int height = imagePlus.getHeight();
         int[] matrix = new int[width * height];
         for(int i = 0; i < height; i++) {
             for(int j = 0; j < width; j++) {
-                int[] buffer = new int[3];
-                int[] colorBuffer = raster.getPixel(j,i, buffer);
-                matrix[j + i*width] = new GrayScaleColor(colorBuffer).grayScaleColorValue();
+                PixelPlus pixel = imagePlus.getPixel(j, i);
+                matrix[j + i*width] = pixel.grayScaleIntensity();
             }
         }
         return new DefaultImagePlus(matrix, width, height);
-    }
-
-    private void checkAndInitializeIfNullGrayScaleImage() {
-        if(grayScaleImagePlus == null) {
-            grayScaleImagePlus = makeGrayScale(imagePlus);
-        }
     }
 }
