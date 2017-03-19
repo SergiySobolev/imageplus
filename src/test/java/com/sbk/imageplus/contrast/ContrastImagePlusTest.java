@@ -3,7 +3,6 @@ package com.sbk.imageplus.contrast;
 import com.sbk.imageplus.DefaultImagePlus;
 import com.sbk.imageplus.ImagePlus;
 import com.sbk.imageplus.pixel.PixelPlus;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

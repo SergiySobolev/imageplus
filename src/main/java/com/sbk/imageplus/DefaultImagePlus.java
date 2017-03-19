@@ -20,7 +20,7 @@ public class DefaultImagePlus implements ImagePlus {
         this(ImageIO.read(imageUrl));
     }
 
-    public DefaultImagePlus(BufferedImage image) {
+    private DefaultImagePlus(BufferedImage image) {
         this.image = image;
     }
 

@@ -38,6 +38,14 @@ public class PixelPlus {
         return (int) (0.2989 * red + 0.5870 * green + 0.1140 * blue);
     }
 
+    public PixelPlus makeBrighter(int brightness) {
+        return new PixelPlus(red + brightness > 255 ? 255 : red + brightness,
+                      green + brightness > 255 ? 255 : green + brightness,
+                      blue + brightness > 255 ? 255 : blue + brightness,
+                      alpha
+                );
+    }
+
     public int toRgb() {
         int newPixel = 0;
         newPixel += alpha; newPixel = newPixel << 8;

@@ -15,6 +15,19 @@ public class GrayScaleImagePlus implements ImagePlus {
         this.grayScaleImage = makeGrayScale(imagePlus);
     }
 
+    private ImagePlus makeGrayScale(ImagePlus imagePlus) {
+        int width = imagePlus.getWidth();
+        int height = imagePlus.getHeight();
+        int[] matrix = new int[width * height];
+        for(int i = 0; i < height; i++) {
+            for(int j = 0; j < width; j++) {
+                PixelPlus pixel = imagePlus.getPixel(j, i);
+                matrix[j + i*width] = pixel.grayScaleIntensity();
+            }
+        }
+        return new DefaultImagePlus(matrix, width, height);
+    }
+
     @Override
     public PixelPlus getPixel(int x, int y) {
         return grayScaleImage.getPixel(x,y);
@@ -40,16 +53,4 @@ public class GrayScaleImagePlus implements ImagePlus {
         grayScaleImage.writeToFile(filePath);
     }
 
-    private ImagePlus makeGrayScale(ImagePlus imagePlus) {
-        int width = imagePlus.getWidth();
-        int height = imagePlus.getHeight();
-        int[] matrix = new int[width * height];
-        for(int i = 0; i < height; i++) {
-            for(int j = 0; j < width; j++) {
-                PixelPlus pixel = imagePlus.getPixel(j, i);
-                matrix[j + i*width] = pixel.grayScaleIntensity();
-            }
-        }
-        return new DefaultImagePlus(matrix, width, height);
-    }
 }
