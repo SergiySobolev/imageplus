@@ -1,8 +1,6 @@
 package com.sbk.imageplus;
 
 import com.sbk.imageplus.pixel.PixelPlus;
-import com.sbk.imageplus.raster.DefaultRasterPlus;
-import com.sbk.imageplus.raster.RasterPlus;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -20,7 +18,7 @@ public class DefaultImagePlus implements ImagePlus {
         this(ImageIO.read(imageUrl));
     }
 
-    private DefaultImagePlus(BufferedImage image) {
+    public DefaultImagePlus(BufferedImage image) {
         this.image = image;
     }
 
@@ -37,12 +35,12 @@ public class DefaultImagePlus implements ImagePlus {
     }
 
     @Override
-    public int getWidth() {
+    public int width() {
         return image.getWidth();
     }
 
     @Override
-    public int getHeight() {
+    public int height() {
         return image.getHeight();
     }
 
@@ -57,12 +55,29 @@ public class DefaultImagePlus implements ImagePlus {
     }
 
     @Override
+    public boolean isAlphaPremultiplied() {
+        return image.getColorModel().isAlphaPremultiplied();
+    }
+
+    @Override
+    public int[] getRGBDataElements() {
+        int type = image.getType();
+        int[] pixels = new int[width()*height()];
+        boolean isRgbOrArgb = type == BufferedImage.TYPE_INT_ARGB || type == BufferedImage.TYPE_INT_RGB;
+        if (isRgbOrArgb){
+            return (int[])image.getRaster().getDataElements( 0, 0, width(), height(), pixels);
+        } else {
+            return image.getRGB(0, 0, width(), height(), pixels, 0, width());
+        }
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (!(o instanceof ImagePlus)) return false;
         ImagePlus that = (ImagePlus) o;
-        boolean ret = (that.getWidth() == getWidth()) && (that.getHeight() == getHeight());
-        for(int i=0; i<that.getWidth(); i++){
-            for(int j=0; j<that.getHeight(); j++){
+        boolean ret = (that.width() == width()) && (that.height() == height());
+        for(int i = 0; i<that.width(); i++){
+            for(int j = 0; j<that.height(); j++){
                 ret = ret && getPixel(i,j).equals(that.getPixel(i,j));
             }
         }

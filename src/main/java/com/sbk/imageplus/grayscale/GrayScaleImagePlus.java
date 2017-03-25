@@ -16,8 +16,8 @@ public class GrayScaleImagePlus implements ImagePlus {
     }
 
     private ImagePlus makeGrayScale(ImagePlus imagePlus) {
-        int width = imagePlus.getWidth();
-        int height = imagePlus.getHeight();
+        int width = imagePlus.width();
+        int height = imagePlus.height();
         int[] matrix = new int[width * height];
         for(int i = 0; i < height; i++) {
             for(int j = 0; j < width; j++) {
@@ -34,18 +34,28 @@ public class GrayScaleImagePlus implements ImagePlus {
     }
 
     @Override
-    public int getWidth() {
-        return grayScaleImage.getWidth();
+    public int width() {
+        return grayScaleImage.width();
     }
 
     @Override
-    public int getHeight() {
-        return grayScaleImage.getHeight();
+    public int height() {
+        return grayScaleImage.height();
     }
 
     @Override
     public int type() {
         return grayScaleImage.type();
+    }
+
+    @Override
+    public boolean isAlphaPremultiplied() {
+        return grayScaleImage.isAlphaPremultiplied();
+    }
+
+    @Override
+    public int[] getRGBDataElements() {
+        return grayScaleImage.getRGBDataElements();
     }
 
     @Override

@@ -5,7 +5,6 @@ import com.sbk.imageplus.ImagePlus;
 import com.sbk.imageplus.pixel.PixelPlus;
 import com.sbk.imageplus.histogram.RedGreedBlueHistogram;
 
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class ContrastImagePlus implements ImagePlus {
@@ -18,9 +17,9 @@ public class ContrastImagePlus implements ImagePlus {
 
     private ImagePlus makeContrast(ImagePlus imagePlus) throws IOException {
         RedGreedBlueHistogram cumulativeDistributionHistogram = new RedGreedBlueHistogram(imagePlus).buildCumulativeDistributionHistogram();
-        int width = imagePlus.getWidth();
-        int height = imagePlus.getHeight();
-        int[] matrix = new int[imagePlus.getWidth() * height];
+        int width = imagePlus.width();
+        int height = imagePlus.height();
+        int[] matrix = new int[imagePlus.width() * height];
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 PixelPlus p = imagePlus.getPixel(j,i);
@@ -37,18 +36,28 @@ public class ContrastImagePlus implements ImagePlus {
     }
 
     @Override
-    public int getWidth() {
-        return contrastImage.getWidth();
+    public int width() {
+        return contrastImage.width();
     }
 
     @Override
-    public int getHeight() {
-        return contrastImage.getHeight();
+    public int height() {
+        return contrastImage.height();
     }
 
     @Override
     public int type() {
         return contrastImage.type();
+    }
+
+    @Override
+    public boolean isAlphaPremultiplied() {
+        return contrastImage.isAlphaPremultiplied();
+    }
+
+    @Override
+    public int[] getRGBDataElements() {
+        return contrastImage.getRGBDataElements();
     }
 
     @Override

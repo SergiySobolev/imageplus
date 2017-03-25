@@ -20,6 +20,7 @@ class ContrastImagePlusTest {
                         getClass().getClassLoader().getResource("inputImage.jpg")
                 )
         );
+        contrastImagePlus.writeToFile("outputContrastImage.jpg");
         assertEquals(new PixelPlus(159,110,150,255), contrastImagePlus.getPixel(0,0));
         assertEquals(new PixelPlus(156,104,146,255), contrastImagePlus.getPixel(1,1));
         assertEquals(new PixelPlus(2,0,1,255), contrastImagePlus.getPixel(100,100));

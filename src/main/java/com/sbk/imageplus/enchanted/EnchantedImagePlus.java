@@ -3,14 +3,7 @@ package com.sbk.imageplus.enchanted;
 import com.sbk.imageplus.DefaultImagePlus;
 import com.sbk.imageplus.ImagePlus;
 import com.sbk.imageplus.pixel.PixelPlus;
-import org.opencv.core.Core;
-import org.opencv.core.Mat;
-import org.opencv.imgcodecs.Imgcodecs;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.awt.image.RescaleOp;
-import java.io.File;
 import java.io.IOException;
 
 
@@ -25,8 +18,8 @@ public class EnchantedImagePlus implements ImagePlus {
     }
 
     private ImagePlus makeEnchanted(ImagePlus imagePlus) throws IOException {
-        int width = imagePlus.getWidth();
-        int height = imagePlus.getHeight();
+        int width = imagePlus.width();
+        int height = imagePlus.height();
         int[] matrix = new int[width * height];
         for(int i = 0; i < height; i++) {
             for(int j = 0; j < width; j++) {
@@ -43,18 +36,28 @@ public class EnchantedImagePlus implements ImagePlus {
     }
 
     @Override
-    public int getWidth() {
-        return enchantedImage.getWidth();
+    public int width() {
+        return enchantedImage.width();
     }
 
     @Override
-    public int getHeight() {
-        return enchantedImage.getHeight();
+    public int height() {
+        return enchantedImage.height();
     }
 
     @Override
     public int type() {
         return enchantedImage.type();
+    }
+
+    @Override
+    public boolean isAlphaPremultiplied() {
+        return enchantedImage.isAlphaPremultiplied();
+    }
+
+    @Override
+    public int[] getRGBDataElements() {
+        return enchantedImage.getRGBDataElements();
     }
 
     @Override

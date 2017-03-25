@@ -3,8 +3,6 @@ package com.sbk.imageplus.histogram;
 import com.sbk.imageplus.ImagePlus;
 import com.sbk.imageplus.pixel.PixelPlus;
 
-import java.awt.image.BufferedImage;
-
 import static com.sbk.imageplus.Constants.INTENSITY_RANGE;
 
 public class RedGreedBlueHistogram {
@@ -31,8 +29,8 @@ public class RedGreedBlueHistogram {
         int[] gHistogramArr = new int[INTENSITY_RANGE];
         int[] bHistogramArr = new int[INTENSITY_RANGE];
 
-        for(int i=0; i<imagePlus.getWidth(); i++) {
-            for(int j=0; j<imagePlus.getHeight(); j++) {
+        for(int i = 0; i<imagePlus.width(); i++) {
+            for(int j = 0; j<imagePlus.height(); j++) {
                 PixelPlus pixel = imagePlus.getPixel(i,j);
 
                 rHistogramArr[pixel.red]++;
@@ -57,7 +55,7 @@ public class RedGreedBlueHistogram {
         long sumG = 0;
         long sumB = 0;
 
-        float scale_factor = ((float)(INTENSITY_RANGE - 1) / (imagePlus.getWidth() * imagePlus.getHeight()));
+        float scale_factor = ((float)(INTENSITY_RANGE - 1) / (imagePlus.width() * imagePlus.height()));
 
         for(int i=0; i<INTENSITY_RANGE; i++) {
             sumR += redHistogram.get(i);

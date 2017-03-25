@@ -17,8 +17,8 @@ public class ContrastGrayScaleImagePlus implements ImagePlus {
     }
 
     private ImagePlus makeContrast(ImagePlus img) {
-        int width = img.getWidth();
-        int height = img.getHeight();
+        int width = img.width();
+        int height = img.height();
         int pixelCount = width * height;
         int[] intensityHistogram = new int[255];
 
@@ -56,18 +56,28 @@ public class ContrastGrayScaleImagePlus implements ImagePlus {
     }
 
     @Override
-    public int getWidth() {
-        return contrastGrayImage.getWidth();
+    public int width() {
+        return contrastGrayImage.width();
     }
 
     @Override
-    public int getHeight() {
-        return contrastGrayImage.getHeight();
+    public int height() {
+        return contrastGrayImage.height();
     }
 
     @Override
     public int type() {
         return contrastGrayImage.type();
+    }
+
+    @Override
+    public boolean isAlphaPremultiplied() {
+        return contrastGrayImage.isAlphaPremultiplied();
+    }
+
+    @Override
+    public int[] getRGBDataElements() {
+        return contrastGrayImage.getRGBDataElements();
     }
 
     @Override

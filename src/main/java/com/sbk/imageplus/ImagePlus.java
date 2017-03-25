@@ -6,8 +6,10 @@ import java.io.IOException;
 
 public interface ImagePlus {
     PixelPlus getPixel(int x, int y);
-    int getWidth();
-    int getHeight();
+    int width();
+    int height();
     int type();
+    boolean isAlphaPremultiplied();
+    int[] getRGBDataElements();
     void writeToFile(String filePath) throws IOException;
 }
