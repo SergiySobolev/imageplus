@@ -58,17 +58,17 @@ public class ConvolveFilteredImagePlus implements ImagePlus {
 	private int[] convolveHV(Kernel kernel, int[] inPixels, int width, int height, boolean alpha, int edgeAction) {
         int[] outPixels = new int[inPixels.length];
 		int index = 0;
-		float[] matrix = kernel.getKernelData( null );
+		float[] kernelData = kernel.getKernelData( null );
 		int rows = kernel.getHeight();
 		int cols = kernel.getWidth();
-		int rows2 = rows/2;
-		int cols2 = cols/2;
+		int halfRows = rows/2;
+		int halfCols = cols/2;
 
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 				float r = 0, g = 0, b = 0, a = 0;
 
-				for (int row = -rows2; row <= rows2; row++) {
+				for (int row = -halfRows; row <= halfRows; row++) {
 					int iy = y+row;
 					int ioffset;
 					if (0 <= iy && iy < height)
@@ -79,9 +79,9 @@ public class ConvolveFilteredImagePlus implements ImagePlus {
 						ioffset = ((iy+height) % height) * width;
 					else
 						continue;
-					int moffset = cols*(row+rows2)+cols2;
-					for (int col = -cols2; col <= cols2; col++) {
-						float f = matrix[moffset+col];
+					int moffset = cols*(row+halfRows)+halfCols;
+					for (int col = -halfCols; col <= halfCols; col++) {
+						float f = kernelData[moffset+col];
 
 						if (f != 0) {
 							int ix = x+col;
@@ -117,17 +117,17 @@ public class ConvolveFilteredImagePlus implements ImagePlus {
 	private int[] convolveH(Kernel kernel, int[] inPixels, int width, int height, boolean alpha, int edgeAction) {
 	    int[] outPixels = new int[inPixels.length];
 		int index = 0;
-		float[] matrix = kernel.getKernelData( null );
+		float[] kernelData = kernel.getKernelData( null );
 		int cols = kernel.getWidth();
-		int cols2 = cols/2;
+		int halfCols = cols/2;
 
 		for (int y = 0; y < height; y++) {
 			int ioffset = y*width;
 			for (int x = 0; x < width; x++) {
 				float r = 0, g = 0, b = 0, a = 0;
-				int moffset = cols2;
-				for (int col = -cols2; col <= cols2; col++) {
-					float f = matrix[moffset+col];
+				int moffset = halfCols;
+				for (int col = -halfCols; col <= halfCols; col++) {
+					float f = kernelData[moffset+col];
 
 					if (f != 0) {
 						int ix = x+col;
@@ -159,21 +159,18 @@ public class ConvolveFilteredImagePlus implements ImagePlus {
 		return outPixels;
 	}
 
-	/**
-	 * Convolve with a kernel consisting of one column
-	 */
 	private int[] convolveV(Kernel kernel, int[] inPixels, int width, int height, boolean alpha, int edgeAction) {
         int[] outPixels = new int[inPixels.length];
 		int index = 0;
-		float[] matrix = kernel.getKernelData( null );
+		float[] kernelData = kernel.getKernelData( null );
 		int rows = kernel.getHeight();
-		int rows2 = rows/2;
+		int halfRows = rows/2;
 
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 				float r = 0, g = 0, b = 0, a = 0;
 
-				for (int row = -rows2; row <= rows2; row++) {
+				for (int row = -halfRows; row <= halfRows; row++) {
 					int iy = y+row;
 					int ioffset;
 					if ( iy < 0 ) {
@@ -193,7 +190,7 @@ public class ConvolveFilteredImagePlus implements ImagePlus {
 					} else
 						ioffset = iy*width;
 
-					float f = matrix[row+rows2];
+					float f = kernelData[row+halfRows];
 
 					if (f != 0) {
 						int rgb = inPixels[ioffset+x];
@@ -213,7 +210,7 @@ public class ConvolveFilteredImagePlus implements ImagePlus {
 		return outPixels;
 	}
 
-    public int clamp(int c) {
+    private int clamp(int c) {
         if (c < 0)
             return 0;
         if (c > 255)
