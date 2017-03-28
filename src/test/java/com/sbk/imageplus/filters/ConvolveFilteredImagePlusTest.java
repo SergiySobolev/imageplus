@@ -1,6 +1,7 @@
 package com.sbk.imageplus.filters;
 
 import com.sbk.imageplus.DefaultImagePlus;
+import com.sbk.imageplus.benchmark.Benchmarked;
 import com.sbk.imageplus.convolve.ConvolveFilteredImagePlus;
 import com.sbk.imageplus.pixel.PixelPlus;
 import org.junit.jupiter.api.Test;
@@ -9,6 +10,7 @@ import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 
+@Benchmarked
 class ConvolveFilteredImagePlusTest {
     @Test
     public void filterWithOneNinthKernel() throws IOException {

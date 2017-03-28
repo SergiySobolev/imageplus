@@ -30,13 +30,10 @@ public class ConvolveFilteredImagePlus implements ImagePlus {
         int height = input[0].length;
         int output = 0;
         for(int i = 0; i<width; i++) {
-            //if(!filter.isInRangeWidth(i, x)) continue;
             for(int j = 0; j<height; j++) {
-                //if(!filter.isInRangeHeight(j, y)) continue;
                 if(!filter.inRangeWithShift(x, i, y, j)) continue;
                 int fx = x - i;
                 int fy = y - j;
-
                 output += input[i][j] * filter.get(fx,fy);
             }
         }
