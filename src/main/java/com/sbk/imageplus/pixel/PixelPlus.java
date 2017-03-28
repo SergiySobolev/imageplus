@@ -18,10 +18,18 @@ public class PixelPlus {
         alpha = c.getAlpha();
     }
 
+    public PixelPlus(int intensity) {
+        this(intensity ,intensity, intensity, 255);
+    }
+
+    public PixelPlus(int red, int green, int blue) {
+        this(red ,green, blue, 255);
+    }
+
     public PixelPlus(int red, int green, int blue, int alpha) {
-        this.red = red;
-        this.green = green;
-        this.blue = blue;
+        this.red = red < 0 ? 0 : (red > 255 ? 255 : red);
+        this.green = green < 0 ? 0 : (green > 255 ? 255 : green);;
+        this.blue = blue < 0 ? 0 : (blue > 255 ? 255 : blue);
         this.alpha = alpha;
     }
 
@@ -71,5 +79,15 @@ public class PixelPlus {
                 && green == pixelPlus.green
                 && blue == pixelPlus.blue
                 && alpha == pixelPlus.alpha;
+    }
+
+    @Override
+    public String toString() {
+        return "PixelPlus{" +
+                "red=" + red +
+                ", green=" + green +
+                ", blue=" + blue +
+                ", alpha=" + alpha +
+                '}';
     }
 }

@@ -11,5 +11,6 @@ public interface ImagePlus {
     int type();
     boolean isAlphaPremultiplied();
     int[] getRGBDataElements();
+    int[][] getRGBDataElements2D();
     void writeToFile(String filePath) throws IOException;
 }

@@ -59,6 +59,11 @@ public class GrayScaleImagePlus implements ImagePlus {
     }
 
     @Override
+    public int[][] getRGBDataElements2D() {
+        return grayScaleImage.getRGBDataElements2D();
+    }
+
+    @Override
     public void writeToFile(String filePath) throws IOException {
         grayScaleImage.writeToFile(filePath);
     }

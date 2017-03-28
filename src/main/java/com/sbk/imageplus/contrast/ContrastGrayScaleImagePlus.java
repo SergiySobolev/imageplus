@@ -81,6 +81,11 @@ public class ContrastGrayScaleImagePlus implements ImagePlus {
     }
 
     @Override
+    public int[][] getRGBDataElements2D() {
+        return contrastGrayImage.getRGBDataElements2D();
+    }
+
+    @Override
     public void writeToFile(String filePath) throws IOException {
         contrastGrayImage.writeToFile(filePath);
     }

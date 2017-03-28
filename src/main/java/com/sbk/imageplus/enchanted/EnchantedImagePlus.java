@@ -61,6 +61,11 @@ public class EnchantedImagePlus implements ImagePlus {
     }
 
     @Override
+    public int[][] getRGBDataElements2D() {
+        return enchantedImage.getRGBDataElements2D();
+    }
+
+    @Override
     public void writeToFile(String filePath) throws IOException {
         enchantedImage.writeToFile(filePath);
     }

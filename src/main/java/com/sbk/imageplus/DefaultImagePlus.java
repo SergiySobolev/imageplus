@@ -23,6 +23,22 @@ public class DefaultImagePlus implements ImagePlus {
     }
 
     public DefaultImagePlus(int[] data, int width, int height) {
+        initImagePlusFromRaster(data, width, height);
+    }
+
+    public DefaultImagePlus(int[][] data) {
+        int width = data.length;
+        int height = data[0].length;
+        int [] data1d = new int [width*height];
+        for(int j=0;j<height;++j){
+            for(int i=0;i<width;++i){
+                data1d[j*width+i] = data[i][j];
+            }
+        }
+        initImagePlusFromRaster(data1d, width, height);
+    }
+
+    private void initImagePlusFromRaster(int[] data, int width, int height) {
         BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB );
         final int[] a = ((DataBufferInt) bi.getRaster().getDataBuffer()).getData();
         System.arraycopy(data, 0, a, 0, data.length);
@@ -69,6 +85,19 @@ public class DefaultImagePlus implements ImagePlus {
         } else {
             return image.getRGB(0, 0, width(), height(), pixels, 0, width());
         }
+    }
+
+    @Override
+    public int[][] getRGBDataElements2D() {
+        int width = width();
+        int height = height();
+        int[][] pixels = new int[width][height];
+        for(int i=0;i<width;i++){
+            for(int j=0; j<height; j++){
+                pixels[i][j] = getPixel(i,j).intensity();
+            }
+        }
+        return pixels;
     }
 
     @Override

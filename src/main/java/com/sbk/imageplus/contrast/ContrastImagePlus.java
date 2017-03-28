@@ -66,6 +66,11 @@ public class ContrastImagePlus implements ImagePlus {
     }
 
     @Override
+    public int[][] getRGBDataElements2D() {
+        return contrastImage.getRGBDataElements2D();
+    }
+
+    @Override
     public boolean equals(Object o) {
        return contrastImage.equals(o);
     }
